@@ -25,6 +25,7 @@ export const LogoText = styled.p`
     font-size: 1.125rem;
     font-weight: 700;
     margin: 0;
+    color: #fe6f0f;
 `
 
 export const HeaderLinkWrap = styled.div`
@@ -38,5 +39,12 @@ export const HeaderLink = styled(Link)`
 	margin: 0 auto;
 	text-align: center;
     font-size: 1.125rem;
+    font-weight: 700;
     line-height: 1.32;
+
+    > a:hover {
+    text-decoration: none;
+    color: #fe6f0f;
+    cursor: pointer;
+}
 `
