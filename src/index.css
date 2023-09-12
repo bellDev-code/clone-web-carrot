@@ -33,3 +33,9 @@ a:active {
   text-decoration: none;
   color: #3f464d;
 }
+
+a:hover {
+  text-decoration: none;
+  color: #fe6f0f;
+  cursor: pointer;
+  }

@@ -1,3 +1,4 @@
+import HeaderButton from "../HeaderButton";
 import SearchInput from "../SearchInput";
 import { Container, HeaderLink, HeaderLinkWrap, HeaderWrap, LogoText, LogoWrap } from "./styles";
 
@@ -34,6 +35,7 @@ const Header = () => {
                     </HeaderLinkWrap>
                 ))}
                 <SearchInput />
+                <HeaderButton />
             </HeaderWrap>
         </Container>
     )

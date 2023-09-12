@@ -8,6 +8,7 @@ export const Container = styled.section`
 
 export const HeaderWrap = styled.div`
     display: flex;
+    align-items: center;
     padding: 0.75rem 1.25rem;
     height: 3.5rem;
     box-sizing: border-box;
@@ -41,10 +42,4 @@ export const HeaderLink = styled(Link)`
     font-size: 1.125rem;
     font-weight: 700;
     line-height: 1.32;
-
-    > a:hover {
-    text-decoration: none;
-    color: #fe6f0f;
-    cursor: pointer;
-}
 `
