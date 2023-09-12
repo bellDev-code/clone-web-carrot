@@ -1,26 +1,7 @@
 import HeaderButton from "../HeaderButton";
 import SearchInput from "../SearchInput";
-import { Container, HeaderLink, HeaderLinkWrap, HeaderWrap, LogoText, LogoWrap } from "./styles";
-
-interface HeaderItem {
-    name: string;
-    url: string;
-}
-
-const HeaderList: HeaderItem[] = [
-    {
-        name: "중고거래",
-        url: "/fleamarket"
-    },
-    {
-        name: "동네가게",
-        url: "/nearby-stores"
-    },
-    {
-        name: "알바",
-        url: "/jobs"
-    }
-]
+import { HeaderList } from "./static";
+import { Container, HeaderLink, HeaderLinkWrap, HeaderWrap, LogoText, LogoWrap, SearchWrap } from "./styles";
 
 const Header = () => {
     return (
@@ -34,8 +15,10 @@ const Header = () => {
                         <HeaderLink to={item.url}>{item.name}</HeaderLink>
                     </HeaderLinkWrap>
                 ))}
-                <SearchInput />
-                <HeaderButton />
+                <SearchWrap>
+                    <SearchInput />
+                    <HeaderButton />
+                </SearchWrap>
             </HeaderWrap>
         </Container>
     )

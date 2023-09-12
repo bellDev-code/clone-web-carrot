@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { Container, HeaderBtn } from './styles';
 
 const HeaderButton = () => {
@@ -23,4 +23,4 @@ const HeaderButton = () => {
   );
 };
 
-export default HeaderButton;
+export default React.memo(HeaderButton);

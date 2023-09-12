@@ -2,8 +2,10 @@ import { Link } from "react-router-dom";
 import { styled } from "styled-components";
 
 export const Container = styled.section`
+    width: 100%;
     max-width: 75rem;
     height: 4rem;
+    position: fixed;
 `
 
 export const HeaderWrap = styled.div`
@@ -42,4 +44,9 @@ export const HeaderLink = styled(Link)`
     font-size: 1.125rem;
     font-weight: 700;
     line-height: 1.32;
+`
+
+export const SearchWrap = styled.div`
+    display: flex;
+    align-items: center;
 `
