@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Home from './Layouts/Home';
 import LoginPage from './Pages/Login';
-import CreateAccountPage from './Pages/CreateAccount';
+import SignUp from './Pages/SignUp';
 
 const App = () => {
   return (
@@ -10,7 +10,7 @@ const App = () => {
       <Routes>
         <Route path='/' element={<Home />}></Route>
         <Route path='/login' element={<LoginPage />}></Route>
-        <Route path='/create' element={<CreateAccountPage />}></Route>
+        <Route path='/signup' element={<SignUp />}></Route>
       </Routes>
     </BrowserRouter>
   );

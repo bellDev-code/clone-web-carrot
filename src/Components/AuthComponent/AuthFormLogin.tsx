@@ -8,7 +8,7 @@ export interface AuthFormData {
   password: string;
 }
 
-interface AuthProps {
+export interface AuthProps {
   formTitle: string;
   submitButtonText: string;
   onSubmit: SubmitHandler<AuthFormData>;
@@ -32,12 +32,12 @@ const AuthFormComponent = ({ formTitle, submitButtonText, onSubmit, linkText, li
       </TextBox>
       <AuthForm onSubmit={handleSubmit(onSubmit)}>
         <AuthWrap>
-          <AuthLable>이메일</AuthLable>
-          <AuthInput type="email" {...register("email", { required: true })} />
+          <AuthLable id="emailLabel">이메일</AuthLable>
+          <AuthInput type="email" aria-labelledby="emailLabel" {...register("email", { required: true })} />
         </AuthWrap>
         <AuthWrap>
-          <AuthLable>비밀번호</AuthLable>
-          <AuthInput type="password" {...register("password", { required: true })} />
+          <AuthLable id="passwordLabel">비밀번호</AuthLable>
+          <AuthInput type="password" aria-labelledby="passwordLabel" {...register("password", { required: true })} />
         </AuthWrap>
         <button type="submit">{submitButtonText}</button>
         <Link to={linkTo}>{linkText}</Link>

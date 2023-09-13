@@ -3,7 +3,7 @@ import AuthFormComponent, { AuthFormData } from "../../Components/AuthComponent/
 
 const LoginPage = () => {
     const handleLoginSubmit = (data: AuthFormData) => {
-      console.log("Login form submitted with data:", data);
+      console.log(data);
     };
   
     return (
@@ -12,7 +12,7 @@ const LoginPage = () => {
         submitButtonText="로그인"
         onSubmit={handleLoginSubmit}
         linkText="회원가입"
-        linkTo="/create"
+        linkTo="/signup"
       />
     );
 };
