@@ -1,20 +1,48 @@
 import React from 'react';
 import { render, fireEvent, screen } from '@testing-library/react';
 import HeaderButton from './index';
+import { MemoryRouter } from 'react-router-dom';
 
-test('HeaderButton 렌더링 및 로그인/로그아웃 테스트', () => {
-  render(<HeaderButton />);
-  
-  // 초기 상태로 "회원가입" 버튼이 나타나야 합니다.
-  const signupButton = screen.getByText('회원가입');
-  expect(signupButton).toBeInTheDocument();
+describe('HeaderButton', () => {
+  it('renders login button when not logged in', () => {
+    render(
+      <MemoryRouter> {/* Wrap your component with MemoryRouter */}
+        <HeaderButton />
+      </MemoryRouter>
+    );
+    
+    const loginButton = screen.getByText('로그인');
+    expect(loginButton).toBeInTheDocument();
+  });
 
-  // "회원가입" 버튼을 클릭하여 "로그아웃" 버튼으로 바뀌는지 테스트
-  fireEvent.click(signupButton);
-  const logoutButton = screen.getByText('로그아웃');
-  expect(logoutButton).toBeInTheDocument();
+  it('renders logout button when logged in', () => {
+    render(
+      <MemoryRouter>
+        <HeaderButton />
+      </MemoryRouter>
+    );
+    
+    const loginButton = screen.getByText('로그인');
+    fireEvent.click(loginButton);
 
-  // "로그아웃" 버튼을 클릭하여 다시 "회원가입" 버튼으로 바뀌는지 테스트
-  fireEvent.click(logoutButton);
-  expect(signupButton).toBeInTheDocument();
+    const logoutButton = screen.getByText('로그아웃');
+    expect(logoutButton).toBeInTheDocument();
+  });
+
+  it('changes to login mode when clicking logout button', () => {
+    render(
+      <MemoryRouter>
+        <HeaderButton />
+      </MemoryRouter>
+    );
+    
+    const loginButton = screen.getByText('로그인');
+    fireEvent.click(loginButton);
+
+    const logoutButton = screen.getByText('로그아웃');
+    fireEvent.click(logoutButton);
+
+    const loginButtonAfterLogout = screen.getByText('로그인');
+    expect(loginButtonAfterLogout).toBeInTheDocument();
+  });
 });

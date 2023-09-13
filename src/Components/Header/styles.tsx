@@ -3,7 +3,6 @@ import { styled } from "styled-components";
 
 export const Container = styled.section`
     width: 100%;
-    max-width: 75rem;
     height: 4rem;
     position: fixed;
 `
@@ -14,7 +13,7 @@ export const HeaderWrap = styled.div`
     padding: 0.75rem 1.25rem;
     height: 3.5rem;
     box-sizing: border-box;
-    justify-content: space-between;
+    justify-content: space-around;
     width: 100%;
     margin: 0 auto;
     position: relative;
