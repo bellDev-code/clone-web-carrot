@@ -36,3 +36,9 @@ export const AuthInput = styled.input`
 `
 
 export const AuthForm = styled.form``
+
+export const AuthBtnWrap = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+`

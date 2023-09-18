@@ -1,11 +1,12 @@
 import React from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { Container, AuthForm, AuthWrap, AuthLable, AuthInput, LoginText, TextBox } from "./styles";
+import { Container, AuthForm, AuthWrap, AuthLable, AuthInput, LoginText, TextBox, AuthBtnWrap } from "./styles";
 import { Link } from "react-router-dom";
 
 export interface SignupFormData {
   email: string;
   password: string;
+  passwordConfirm: string;
   nickName?: string;
   region: string;
 }
@@ -22,7 +23,10 @@ const AuthFormSignup = ({ formTitle, submitButtonText, onSubmit, linkText, linkT
   const {
     register,
     handleSubmit,
+    watch,
   } = useForm<SignupFormData>();
+
+  const password = watch("password");
 
   return (
     <Container>
@@ -37,19 +41,31 @@ const AuthFormSignup = ({ formTitle, submitButtonText, onSubmit, linkText, linkT
           <AuthInput type="email" {...register("email", { required: true })} />
         </AuthWrap>
         <AuthWrap>
+          <AuthLable>닉네임</AuthLable>
+          <AuthInput type="text" {...register("nickName")} />
+        </AuthWrap>
+        <AuthWrap>
+          <AuthLable>우리 동네</AuthLable>
+          <AuthInput type="text" {...register("region", { required: true })} />
+        </AuthWrap>
+        <AuthWrap>
           <AuthLable>비밀번호</AuthLable>
           <AuthInput type="password" {...register("password", { required: true })} />
         </AuthWrap>
         <AuthWrap>
-          <AuthLable>닉네임</AuthLable>
-          <AuthInput type="text" {...register("nickName", { required: true })} />
+          <AuthLable>비밀번호 확인</AuthLable>
+          <AuthInput
+            type="password"
+            {...register("passwordConfirm", {
+              required: true,
+              validate: (value) => value === password,
+            })}
+          />
         </AuthWrap>
-        <AuthWrap>
-          <AuthLable>동네</AuthLable>
-          <AuthInput type="text" {...register("region", { required: true })} />
-        </AuthWrap>
-        <button type="submit">{submitButtonText}</button>
-        <Link to={linkTo}>{linkText}</Link>
+        <AuthBtnWrap>
+          <button type="submit">{submitButtonText}</button>
+          <Link to={linkTo}>{linkText}</Link>
+        </AuthBtnWrap>
       </AuthForm>
     </Container>
   );
