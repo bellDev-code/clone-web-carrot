@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
+import axios from "axios";
 import { Container, AuthForm, AuthWrap, AuthLable, AuthInput, LoginText, TextBox, AuthBtnWrap } from "./styles";
 import { Link } from "react-router-dom";
 import Postcode from "../postCode";
@@ -35,9 +36,20 @@ const AuthFormSignup = ({ formTitle, submitButtonText, onSubmit, linkText, linkT
     setRegion(address);
   };
 
+  // async
   const handleFormSubmit = (data: SignupFormData) => {
     const combinedRegion = `${region} ${data.region}`;
     onSubmit({ ...data, region: combinedRegion });
+
+    // const postData = { ...data, region: combinedRegion };
+
+    // try {
+    //   await axios.post(apiUrl, postData);
+    //   console.log("폼 데이터가 서버에 성공적으로 전송되었습니다!");
+    // } catch (error) {
+    //   // API 요청에서 발생한 오류를 처리
+    //   console.error("폼 데이터 전송 중 오류 발생:", error);
+    // }
   };
 
   return (
