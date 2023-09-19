@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { Container, AuthForm, AuthWrap, AuthLable, AuthInput, LoginText, TextBox, AuthBtnWrap } from "./styles";
 import { Link } from "react-router-dom";
-import NaverMap from "../Maps";
+import Postcode from "../postCode";
 
 export interface SignupFormData {
   email: string;
@@ -27,13 +27,18 @@ const AuthFormSignup = ({ formTitle, submitButtonText, onSubmit, linkText, linkT
     watch,
   } = useForm<SignupFormData>();
 
-  const [openMap, setOpenMap] = useState(false)
+  const [region, setRegion] = useState<string>('');
 
-  const openNaverMap = () => {
-    setOpenMap(true)
-  }
+  const password = watch('password');
 
-  const password = watch("password");
+  const handleAddressChange = (address: string) => {
+    setRegion(address);
+  };
+
+  const handleFormSubmit = (data: SignupFormData) => {
+    const combinedRegion = `${region} ${data.region}`;
+    onSubmit({ ...data, region: combinedRegion });
+  };
 
   return (
     <Container>
@@ -42,7 +47,7 @@ const AuthFormSignup = ({ formTitle, submitButtonText, onSubmit, linkText, linkT
           <span>당근</span> {formTitle}
         </LoginText>
       </TextBox>
-      <AuthForm onSubmit={handleSubmit(onSubmit)}>
+      <AuthForm onSubmit={handleSubmit(handleFormSubmit)}>
         <AuthWrap>
           <AuthLable id="emailLable">이메일</AuthLable>
           <AuthInput type="email" aria-labelledby="emailLable" {...register("email", { required: true })} />
@@ -53,10 +58,8 @@ const AuthFormSignup = ({ formTitle, submitButtonText, onSubmit, linkText, linkT
         </AuthWrap>
         <AuthWrap>
           <AuthLable id="regionLable">우리 동네</AuthLable>
-          <AuthInput type="text" aria-labelledby="regionLable" {...register("region", { required: true })} onClick={openNaverMap} />
-        </AuthWrap>
-        <AuthWrap>
-          {openMap && <NaverMap />} 
+          <AuthInput type="text" aria-labelledby="regionLable" value={region} {...register("region", { required: true })} />
+          <Postcode onAddressChange={handleAddressChange} />
         </AuthWrap>
         <AuthWrap>
           <AuthLable id="passwordLable">비밀번호</AuthLable>
