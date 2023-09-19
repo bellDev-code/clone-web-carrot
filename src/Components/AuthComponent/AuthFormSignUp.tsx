@@ -8,7 +8,7 @@ import Postcode from "../postCode";
 export interface SignupFormData {
   email: string;
   password: string;
-  passwordConfirm: string;
+  passwordConfirm?: string;
   nickName?: string;
   region: string;
 }
@@ -26,6 +26,8 @@ const AuthFormSignup = ({ formTitle, submitButtonText, onSubmit, linkText, linkT
     register,
     handleSubmit,
     watch,
+    formState: { errors },
+    setError
   } = useForm<SignupFormData>();
 
   const [region, setRegion] = useState<string>('');
@@ -37,19 +39,21 @@ const AuthFormSignup = ({ formTitle, submitButtonText, onSubmit, linkText, linkT
   };
 
   // async
-  const handleFormSubmit = (data: SignupFormData) => {
+  const handleFormSubmit = async(data: SignupFormData) => {
     const combinedRegion = `${region} ${data.region}`;
-    onSubmit({ ...data, region: combinedRegion });
+    const postData = { ...data, region: combinedRegion };
 
-    // const postData = { ...data, region: combinedRegion };
+    const { passwordConfirm, ...postSignUp } = postData;
 
-    // try {
-    //   await axios.post(apiUrl, postData);
-    //   console.log("폼 데이터가 서버에 성공적으로 전송되었습니다!");
-    // } catch (error) {
-    //   // API 요청에서 발생한 오류를 처리
-    //   console.error("폼 데이터 전송 중 오류 발생:", error);
-    // }
+    const url = `${process.env.API_KEY}/user/create`
+
+    try {
+
+      await axios.post(url, postSignUp);
+      console.log("폼 데이터가 서버에 성공적으로 전송되었습니다!");
+    } catch (error) {
+      console.error("폼 데이터 전송 중 오류 발생:", error);
+    }
   };
 
   return (

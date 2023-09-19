@@ -6,12 +6,19 @@ interface PostcodeProps {
 
 interface CustomWindow extends Window {
     daum: any; // daum의 타입에 맞게 수정해야 합니다.
-  }
+}
   
 declare const window: CustomWindow;
+
+interface DaumPostcodeData {
+    address: string;
+    addressType: string;
+    bname: string;
+    buildingName: string;
+}
   
 const Postcode = ({ onAddressChange }: PostcodeProps) => {
-    const handleComplete = (data: any) => {
+    const handleComplete = (data: DaumPostcodeData) => {
     let fullAddress = data.address;
     let extraAddress = '';
     
