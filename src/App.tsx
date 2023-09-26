@@ -7,7 +7,7 @@ import { AuthContextProvider } from './Hooks/Context/AuthContext';
 
 const App = () => {
   return (
-    <AuthContextProvider>
+    // <AuthContextProvider>
     <BrowserRouter>
       <Routes>
         <Route path='/' element={<Home />}></Route>
@@ -15,7 +15,7 @@ const App = () => {
         <Route path='/signup' element={<SignUp />}></Route>
       </Routes>
     </BrowserRouter>
-    </AuthContextProvider>
+    // </AuthContextProvider>
   );
 }
 

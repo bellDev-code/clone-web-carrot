@@ -39,8 +39,8 @@ const AuthFormComponent = ({ formTitle, submitButtonText, onSubmit, linkText, li
         password: data.password
       });
       
-      const response = await axios.post(url, formData, config);
-      console.log('로그인 성공:', response.data);
+      await axios.post(url, formData, config);
+
       authContext?.refetch()
       navigate("/")
     } catch (error) {

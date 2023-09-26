@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import axios from "axios";
-import { Container, AuthForm, AuthWrap, AuthLable, AuthInput, LoginText, TextBox, AuthBtnWrap } from "./styles";
+import { Container, AuthForm, AuthWrap, AuthLable, AuthInput, LoginText, TextBox, AuthBtnWrap, AddressWrap, AddressBox, AuthButton } from "./styles";
 import { Link, useNavigate } from "react-router-dom";
 import Postcode from "../postCode";
 
@@ -11,6 +11,7 @@ export interface SignupFormData {
   passwordConfirm?: string;
   username: string;
   region: string;
+  addRegion: string;
 }
 
 interface AuthFormSignupProps {
@@ -28,8 +29,8 @@ const AuthFormSignup = ({ formTitle, submitButtonText, linkText, linkTo }: AuthF
     watch,
   } = useForm<SignupFormData>();
 
-  const [region, setRegion] = useState<string>('');
   const navigate = useNavigate()
+  const [region, setRegion] = useState<string>('');
   const password = watch('password');
 
   const handleAddressChange = (address: string) => {
@@ -38,14 +39,14 @@ const AuthFormSignup = ({ formTitle, submitButtonText, linkText, linkTo }: AuthF
 
   // async
   const handleFormSubmit = async(data: SignupFormData) => {
-    const combinedRegion = `${region} ${data.region}`;
+    const combinedRegion = data.addRegion ? `${data.region} ${data.addRegion}` : data.region;
     const postData = { ...data, region: combinedRegion };
     const url = `${process.env.REACT_APP_API_KEY}/user/create`
 
     try {
       const { passwordConfirm, ...postSignUp } = postData;
-      const response = await axios.post(url, postSignUp);
-      console.log(response);
+      await axios.post(url, postSignUp);
+
       navigate("/login")
     } catch (error) {
       console.error("폼 데이터 전송 중 오류 발생:", error);
@@ -71,11 +72,16 @@ const AuthFormSignup = ({ formTitle, submitButtonText, linkText, linkTo }: AuthF
           <AuthLable id="usernameLable">닉네임</AuthLable>
           <AuthInput type="text" aria-labelledby="usernameLable" {...register("username", { required: true })} />
         </AuthWrap>
-        <AuthWrap>
-          <AuthLable id="regionLable">우리 동네</AuthLable>
-          <AuthInput type="text" aria-labelledby="regionLable" value={region} {...register("region", { required: true })} />
-          <Postcode onAddressChange={handleAddressChange} />
-        </AuthWrap>
+          <AddressWrap>
+            <AddressBox>
+              <AuthLable id="regionLable">우리 동네</AuthLable>
+              <Postcode onAddressChange={handleAddressChange} />
+            </AddressBox>
+            <AddressBox>
+            <AuthInput type="text" aria-labelledby="regionLable" value={region} {...register("region", { required: true })} />
+            <AuthInput placeholder="직접입력" type="text" aria-labelledby="regionLable" {...register("addRegion")} />
+            </AddressBox>
+          </AddressWrap>
         <AuthWrap>
           <AuthLable id="passwordLable">비밀번호</AuthLable>
           <AuthInput type="password" aria-labelledby="passwordLable" {...register("password", { required: true })} />
@@ -92,7 +98,7 @@ const AuthFormSignup = ({ formTitle, submitButtonText, linkText, linkTo }: AuthF
           />
         </AuthWrap>
         <AuthBtnWrap>
-          <button type="submit">{submitButtonText}</button>
+          <AuthButton type="submit">{submitButtonText}</AuthButton>
           <Link to={linkTo}>{linkText}</Link>
         </AuthBtnWrap>
       </AuthForm>
