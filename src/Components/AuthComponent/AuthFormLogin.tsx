@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { Container, AuthForm, AuthWrap, AuthLable, AuthInput, LoginText, TextBox } from "./styles";
+import { Container, AuthForm, AuthWrap, AuthLable, AuthInput, LoginText, TextBox, AuthBtnWrap, AuthButton } from "./styles";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { AuthContext } from "../../Hooks/Context/AuthContext";
@@ -65,8 +65,10 @@ const AuthFormComponent = ({ formTitle, submitButtonText, onSubmit, linkText, li
           <AuthLable id="passwordLabel">비밀번호</AuthLable>
           <AuthInput type="password" aria-labelledby="passwordLabel" {...register("password", { required: true })} />
         </AuthWrap>
-        <button type="submit">{submitButtonText}</button>
-        <Link to={linkTo}>{linkText}</Link>
+        <AuthBtnWrap>
+          <AuthButton type="submit">{submitButtonText}</AuthButton>
+          <Link to={linkTo}>{linkText}</Link>
+        </AuthBtnWrap>
       </AuthForm>
     </Container>
   );

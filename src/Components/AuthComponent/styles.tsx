@@ -19,8 +19,9 @@ export const LoginText = styled.p`
 export const AuthForm = styled.form``
 
 export const AuthWrap = styled.div`
+    width: 100%;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
     padding: 10px 5px;
 `
@@ -41,7 +42,7 @@ export const AddressWrap = styled.div``
 
 export const AddressBox = styled.div`
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     padding-bottom: 5px;
 `
 

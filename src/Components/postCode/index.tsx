@@ -1,4 +1,5 @@
 import React from 'react';
+import { AdressButton } from './styles';
 
 interface PostcodeProps {
     onAddressChange: (address: string) => void;
@@ -42,9 +43,9 @@ const Postcode = ({ onAddressChange }: PostcodeProps) => {
         };
     
         return (
-        <button type='button' onClick={handleClick}>
+        <AdressButton type='button' onClick={handleClick}>
             동네입력
-        </button>
+        </AdressButton>
         );
     };
     

@@ -11,7 +11,7 @@ const LoginPage = () => {
         formTitle="로그인"
         submitButtonText="로그인"
         onSubmit={handleLoginSubmit}
-        linkText="회원가입"
+        linkText="아직도 회원이 아니신가요?"
         linkTo="/signup"
       />
     );
