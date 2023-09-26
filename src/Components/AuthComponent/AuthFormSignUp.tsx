@@ -2,14 +2,14 @@ import React, { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import axios from "axios";
 import { Container, AuthForm, AuthWrap, AuthLable, AuthInput, LoginText, TextBox, AuthBtnWrap } from "./styles";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Postcode from "../postCode";
 
 export interface SignupFormData {
   email: string;
   password: string;
   passwordConfirm?: string;
-  nickName?: string;
+  username: string;
   region: string;
 }
 
@@ -21,17 +21,15 @@ interface AuthFormSignupProps {
   linkTo: string;
 }
 
-const AuthFormSignup = ({ formTitle, submitButtonText, onSubmit, linkText, linkTo }: AuthFormSignupProps) => {
+const AuthFormSignup = ({ formTitle, submitButtonText, linkText, linkTo }: AuthFormSignupProps) => {
   const {
     register,
     handleSubmit,
     watch,
-    formState: { errors },
-    setError
   } = useForm<SignupFormData>();
 
   const [region, setRegion] = useState<string>('');
-
+  const navigate = useNavigate()
   const password = watch('password');
 
   const handleAddressChange = (address: string) => {
@@ -42,15 +40,13 @@ const AuthFormSignup = ({ formTitle, submitButtonText, onSubmit, linkText, linkT
   const handleFormSubmit = async(data: SignupFormData) => {
     const combinedRegion = `${region} ${data.region}`;
     const postData = { ...data, region: combinedRegion };
-
-    const { passwordConfirm, ...postSignUp } = postData;
-
-    const url = `${process.env.API_KEY}/user/create`
+    const url = `${process.env.REACT_APP_API_KEY}/user/create`
 
     try {
-
-      await axios.post(url, postSignUp);
-      console.log("폼 데이터가 서버에 성공적으로 전송되었습니다!");
+      const { passwordConfirm, ...postSignUp } = postData;
+      const response = await axios.post(url, postSignUp);
+      console.log(response);
+      navigate("/login")
     } catch (error) {
       console.error("폼 데이터 전송 중 오류 발생:", error);
     }
@@ -66,11 +62,14 @@ const AuthFormSignup = ({ formTitle, submitButtonText, onSubmit, linkText, linkT
       <AuthForm onSubmit={handleSubmit(handleFormSubmit)}>
         <AuthWrap>
           <AuthLable id="emailLable">이메일</AuthLable>
-          <AuthInput type="email" aria-labelledby="emailLable" {...register("email", { required: true })} />
+          <AuthInput 
+            type="email" 
+            aria-labelledby="emailLable" 
+            {...register("email", { required: true })} />
         </AuthWrap>
         <AuthWrap>
-          <AuthLable id="nickNameLable">닉네임</AuthLable>
-          <AuthInput type="text" aria-labelledby="nickNameLable" {...register("nickName")} />
+          <AuthLable id="usernameLable">닉네임</AuthLable>
+          <AuthInput type="text" aria-labelledby="usernameLable" {...register("username", { required: true })} />
         </AuthWrap>
         <AuthWrap>
           <AuthLable id="regionLable">우리 동네</AuthLable>

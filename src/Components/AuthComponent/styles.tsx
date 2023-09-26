@@ -42,3 +42,7 @@ export const AuthBtnWrap = styled.div`
     flex-direction: column;
     align-items: center;
 `
+
+export const ErrorMessage = styled.p`
+    color: red;
+`

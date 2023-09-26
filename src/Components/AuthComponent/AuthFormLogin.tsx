@@ -1,11 +1,12 @@
-import React from "react";
+import React, { useContext } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { Container, AuthForm, AuthWrap, AuthLable, AuthInput, LoginText, TextBox } from "./styles";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { AuthContext } from "../../Hooks/Context/AuthContext";
 
 export interface AuthFormData {
-  email: string;
+  username: string;
   password: string;
 }
 
@@ -17,26 +18,36 @@ export interface AuthProps {
   linkTo: string;
 }
 
-const handleFormSubmit = async (data: AuthFormData) => {
-  
-  try {
-    const url = `${process.env.API_KEY}/user/login`
-    const response = await axios.post(url, data);
-    
-    // 로그인 요청이 성공하면 서버로부터 받은 응답을 출력합니다.
-    console.log('로그인 성공:', response.data);
-  } catch (error) {
-    // 로그인 요청이 실패하면 에러를 출력합니다.
-    console.error('로그인 실패:', error);
-  }
-};
-
 const AuthFormComponent = ({ formTitle, submitButtonText, onSubmit, linkText, linkTo }: AuthProps) => {
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
-    formState: { errors },
   } = useForm<AuthFormData>();
+  const authContext = useContext(AuthContext);
+
+  const handleFormSubmit = async (data: AuthFormData) => {
+    const url = `${process.env.REACT_APP_API_KEY}/user/login`;
+    const config = {
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+    };
+    try {
+      const formData = new URLSearchParams({
+        username: data.username,
+        password: data.password
+      });
+      
+      const response = await axios.post(url, formData, config);
+      console.log('로그인 성공:', response.data);
+      authContext?.refetch()
+      navigate("/")
+    } catch (error) {
+      // 로그인 요청이 실패하면 에러를 출력합니다.
+      console.error('로그인 실패:', error);
+    }
+  };
 
   return (
     <Container>
@@ -47,8 +58,8 @@ const AuthFormComponent = ({ formTitle, submitButtonText, onSubmit, linkText, li
       </TextBox>
       <AuthForm onSubmit={handleSubmit(handleFormSubmit)}>
         <AuthWrap>
-          <AuthLable id="emailLabel">이메일</AuthLable>
-          <AuthInput type="email" aria-labelledby="emailLabel" {...register("email", { required: true })} />
+          <AuthLable id="usernameLabel">닉네임</AuthLable>
+          <AuthInput type="text" aria-labelledby="usernameLabel" {...register("username", { required: true })} />
         </AuthWrap>
         <AuthWrap>
           <AuthLable id="passwordLabel">비밀번호</AuthLable>
